@@ -137,8 +137,8 @@ function setup()
     avoid = Set {
       'area',
       -- 'toll',    -- uncomment this to avoid tolls
-      'reversible',
-      'impassable',
+      -- 'reversible',
+      -- 'impassable',
       'steps',
       'proposed'
     },
@@ -334,7 +334,7 @@ end
     local rate = 1  -- Default rate
     if data.route == "ferry"
         rate = 0.5
-    if data.highway == "construction" then
+    if data.highway == "construction" or data.oneway == "reversible" or data.smoothness == "impassable" then
         rate = 0.001  -- Less preferred rate
     end
 
