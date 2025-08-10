@@ -63,7 +63,8 @@ function setup()
       'height_restrictor',
       'arch',
       'bus',
-      'psv'
+      'psv',
+      'bus_trap'
     },
 
     access_tag_whitelist = Set {
@@ -330,15 +331,6 @@ function setup()
 end
 
 
--- Discourage use of railways under construction or disused by reducing rate
-    local rate = 1  -- Default rate
-    if data.route == "ferry"
-        rate = 0.5
-    if data.highway == "construction" or data.oneway == "reversible" or data.smoothness == "impassable" then
-        rate = 0.001  -- Less preferred rate
-    end
-
-
 
 function process_node(profile, node, result, relations)
   -- parse access and barrier tags
@@ -529,6 +521,15 @@ function process_turn(profile, turn)
       end
   end
 end
+-- Discourage use of railways under construction or disused by reducing rate
+    local rate = 1  -- Default rate
+    if data.route == "ferry" then
+        rate = 0.5
+    end
+    if data.highway == "construction" or data.oneway == "reversible" or data.smoothness == "impassable" then
+        rate = 0.001  -- Less preferred rate
+    end
+
 
 return {
   setup = setup,
