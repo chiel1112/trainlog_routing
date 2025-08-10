@@ -139,9 +139,7 @@ function setup()
       -- 'toll',    -- uncomment this to avoid tolls
       'reversible',
       'impassable',
-      'hov_lanes',
       'steps',
-      'construction',
       'proposed'
     },
 
@@ -330,6 +328,17 @@ function setup()
     }
   }
 end
+
+
+-- Discourage use of railways under construction or disused by reducing rate
+    local rate = 1  -- Default rate
+    if data.route == "ferry"
+        rate = 0.5
+    if data.highway == "construction" then
+        rate = 0.001  -- Less preferred rate
+    end
+
+
 
 function process_node(profile, node, result, relations)
   -- parse access and barrier tags
